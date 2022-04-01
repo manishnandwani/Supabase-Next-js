@@ -7,7 +7,7 @@ import List from './components/List'
 
 const Home: NextPage = () => {
   const [loading,setLoading] = useState(true)
-  const [tasks,setTasks] = useState([])
+  const [tasks,setTasks] = useState([] as any)
 
   const [task, setTask] = useState({
     name: "",
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   const {name, activity, startDate, endDate} = task
 
   const getTasks = async ()=>{
-    const {data} = await supabase.from("user").select();
+    let {data}= await supabase.from("user").select();
     setTasks(data);
     setLoading(false)
   }
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
     getTasks()
   }
 
-  const deleteTask = async (id) =>{
+  const deleteTask = async (id:any) =>{
     setLoading(true)
     await supabase.from("user").delete().eq("id",id);
     getTasks()
